@@ -10,7 +10,7 @@ ax.plot(austin_weather["MONTH"], austin_weather["MLY-PRCP-NORMAL"])
 ax.set_xlabel('Time (months)')
 
 # Customize the y-axis label
-ax.set_label('Precipitation (inches)')
+ax.set_ylabel('Precipitation (inches)')
 
 # Add the title
 ax.set_title('Weather patterns in Austin and Seattle')

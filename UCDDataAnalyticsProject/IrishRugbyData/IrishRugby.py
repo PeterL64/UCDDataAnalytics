@@ -44,15 +44,37 @@ Home = IrelandDF['Location'].replace(['Dublin','Limerick','Croke Park','Lansdown
 #print(IrelandDF[['Date, Opposition Name, Result, Location, Opposition Rating, Rating']])
 IrelandDF.drop(['Opposition Debutants','Debutants','Opposition tries in last 5 games',\
                 'Tries in last 5 games','Games since last loss'], inplace=True, axis=1)
-print(IrelandDF.head())
+#print(IrelandDF.head(10))
 
 
 # Filtering Wins/Losses/Ties
-#Games_Won = (IrelandDF[IrelandDF['Result'] > 0]) # This filters the dataframe to show only records where Ireland won a game
-#Games_Lost = (IrelandDF[IrelandDF['Result'] < 0])
-#Games_Tied = (IrelandDF[IrelandDF['Result'] == 0])
-#print(Games_Lost.head())
+Games_Won = (IrelandDF[IrelandDF['Result'] > 0]) # This filters the dataframe to show only records where Ireland won a game
+Games_Lost = (IrelandDF[IrelandDF['Result'] < 0])
+Games_Tied = (IrelandDF[IrelandDF['Result'] == 0])
+#print(Games_Won)
 
 
 
 
+# Graphs
+
+# Ireland's Rating Over Time. Needs xaxis labels fixed
+fig, ax = plt.subplots(figsize=(12,8))
+ax.plot(IrelandDF.index, IrelandDF['Rating'], color='green')
+ax.set_title('Irelands World Rugby Rating 2003 - 2018')
+ax.set_xlabel('Time')
+ax.set_ylabel('World Rugby Team Rating')
+#ax.set_xticklabels(IrelandDF.index, rotation=90)
+#ax.xaxis.set_major_locator(plt.MaxNLocator(20))
+ax.tick_params('y', colors='red')
+plt.show()
+
+#fig, ax = plt.subplots()
+#ax.hist(IrelandDF.index, IrelandDF['Rating'])
+#ax.set_xticklabels(IrelandDF.index, rotation=90)
+#ax.set_ylabel('Ratings')
+#plt.show()
+
+#Sample Simple Plot
+#IrelandDF['Rating'].plot(kind='line')
+#plt.show()
