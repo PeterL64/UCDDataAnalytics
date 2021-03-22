@@ -1,3 +1,6 @@
+# Analysing Ireland Rugby match data to determine win rate Home vs Away
+
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -11,24 +14,25 @@ IrelandDF = pd.read_csv(file, index_col = 1)    # Importing in Pandas DataFrame 
 # Alternatively loading file directly from file location below:
 # IrelandDF = pd.read_csv(r"C:\Users\peter\Desktop\UCD Data Analytics\Project\Ireland Rugby\IREMatchData(FULL).csv")
 
+
+
 # Exploring the raw data
-print(IrelandDF.head())
+#print(IrelandDF.head())
 #print(IrelandDF.shape)
 #print(IrelandDF.count())   # The number of values in each column is = the number of rows seen in .shape so I can conclude there are no null values
 #print(IrelandDF.info())
 #print(IrelandDF.index)
-print(IrelandDF.columns)
+#print(IrelandDF.columns)
 #print(IrelandDF.dtypes)
 #print(type(IrelandDF))
 #print(IrelandDF['Opposition Name'].unique())   # Showing a list of all the opposition Ireland faced
 #print(IrelandDF.nunique())  # Showing the total number of unique values in each column
 #print(IrelandDF['Opposition Name'].value_counts())  # Shows how many times Ireland played against each team
+
 #print(IrelandDF['Location'].value_counts()) # Shows location of games. Concerned here about home vs away
 # Lansdowne Road, Croke Park, Limerick and Dublin will be changed to 'Home' because they would be considered Home Games
 Home = IrelandDF['Location'].replace(['Dublin','Limerick','Croke Park','Lansdowne Road'],['Home','Home','Home','Home'], inplace=True)
-print(IrelandDF['Location'].value_counts())
-
-
+#print(IrelandDF['Location'].value_counts())
 
 #missing_values = IrelandDF.isnull().sum()   # Checking if there are any missing values and if there are, how many
 #print(missing_values)
@@ -38,7 +42,8 @@ print(IrelandDF['Location'].value_counts())
 
 # Creating a dataframe with only relevant columns
 #print(IrelandDF[['Date, Opposition Name, Result, Location, Opposition Rating, Rating']])
-
+IrelandDF.drop(['Opposition Debutants','Debutants','Opposition tries in last 5 games','Tries in last 5 games','Games since last loss'], inplace=True, axis=1)
+print(IrelandDF.head())
 
 
 # Filtering Wins/Losses/Ties
