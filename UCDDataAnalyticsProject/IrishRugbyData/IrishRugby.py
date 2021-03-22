@@ -17,7 +17,7 @@ print(IrelandDF.head())
 #print(IrelandDF.count())   # The number of values in each column is = the number of rows seen in .shape so I can conclude there are no null values
 #print(IrelandDF.info())
 #print(IrelandDF.index)
-#print(IrelandDF.columns)
+print(IrelandDF.columns)
 #print(IrelandDF.dtypes)
 #print(type(IrelandDF))
 #print(IrelandDF['Opposition Name'].unique())   # Showing a list of all the opposition Ireland faced
@@ -25,6 +25,10 @@ print(IrelandDF.head())
 #print(IrelandDF['Opposition Name'].value_counts())  # Shows how many times Ireland played against each team
 #print(IrelandDF['Location'].value_counts()) # Shows location of games. Concerned here about home vs away
 # Lansdowne Road, Croke Park, Limerick and Dublin will be changed to 'Home' because they would be considered Home Games
+Home = IrelandDF['Location'].replace(['Dublin','Limerick','Croke Park','Lansdowne Road'],['Home','Home','Home','Home'], inplace=True)
+print(IrelandDF['Location'].value_counts())
+
+
 
 #missing_values = IrelandDF.isnull().sum()   # Checking if there are any missing values and if there are, how many
 #print(missing_values)
@@ -32,8 +36,8 @@ print(IrelandDF.head())
 
 
 
-
-print(IrelandDF[['Date, Opposition Name, Result, Location, Opposition Rating, Rating']])
+# Creating a dataframe with only relevant columns
+#print(IrelandDF[['Date, Opposition Name, Result, Location, Opposition Rating, Rating']])
 
 
 
@@ -42,3 +46,7 @@ print(IrelandDF[['Date, Opposition Name, Result, Location, Opposition Rating, Ra
 #Games_Lost = (IrelandDF[IrelandDF['Result'] < 0])
 #Games_Tied = (IrelandDF[IrelandDF['Result'] == 0])
 #print(Games_Lost.head())
+
+
+
+
