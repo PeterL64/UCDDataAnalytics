@@ -6,7 +6,8 @@ import requests
 # Specify the url: url
 url = "http://www.datacamp.com/teach/documentation"
 
-# Packages the request, send the request and catch the response: r. This is how is could be worded in a job
+# Packages the request, send the request and catch the response: r. (This is how is
+# could be worded in a job).
 # Package the request to the URL, send the request and catch the response with a
 # single function requests.get(), assigning the response to the variable: r.
 r = requests.get(url)

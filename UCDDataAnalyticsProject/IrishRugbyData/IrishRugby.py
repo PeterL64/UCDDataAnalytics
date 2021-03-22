@@ -32,8 +32,13 @@ print(IrelandDF.head())
 
 
 
+
+print(IrelandDF[['Date, Opposition Name, Result, Location, Opposition Rating, Rating']])
+
+
+
 # Filtering Wins/Losses/Ties
-Games_Won = (IrelandDF[IrelandDF['Result'] > 0]) # This filters the dataframe to show only records where Ireland won a game
-Games_Lost = (IrelandDF[IrelandDF['Result'] < 0])
-Games_Tied = (IrelandDF[IrelandDF['Result'] == 0])
-print(Games_Tied)
+#Games_Won = (IrelandDF[IrelandDF['Result'] > 0]) # This filters the dataframe to show only records where Ireland won a game
+#Games_Lost = (IrelandDF[IrelandDF['Result'] < 0])
+#Games_Tied = (IrelandDF[IrelandDF['Result'] == 0])
+#print(Games_Lost.head())
