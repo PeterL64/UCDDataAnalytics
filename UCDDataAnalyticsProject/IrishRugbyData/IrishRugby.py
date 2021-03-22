@@ -42,7 +42,8 @@ Home = IrelandDF['Location'].replace(['Dublin','Limerick','Croke Park','Lansdown
 
 # Creating a dataframe with only relevant columns
 #print(IrelandDF[['Date, Opposition Name, Result, Location, Opposition Rating, Rating']])
-IrelandDF.drop(['Opposition Debutants','Debutants','Opposition tries in last 5 games','Tries in last 5 games','Games since last loss'], inplace=True, axis=1)
+IrelandDF.drop(['Opposition Debutants','Debutants','Opposition tries in last 5 games',\
+                'Tries in last 5 games','Games since last loss'], inplace=True, axis=1)
 print(IrelandDF.head())
 
 
