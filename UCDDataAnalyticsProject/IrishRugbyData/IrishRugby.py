@@ -168,18 +168,51 @@ y1 = [Home_Wins_Number, Home_Loss_Number, Home_Tied_Number]
 y2 = [Away_Wins_Number, Away_Loss_Number, Away_Tied_Number]
 
 # Home and Away Results Chart
+plt.style.use('ggplot')
 fig, ax = plt.subplots(2,1, sharey=True, figsize=(8,7))
-ax[0].bar(x1, y1, label='Green', color=['green','red','blue'])
+ax[0].bar(x1, y1, color=['green','red','blue'])
 ax[0].set_title('Irish Rugby Home Results 2003 - 2018')
 ax[0].set_ylabel('Number of Win/Loss/Tie')
-a#x[0].legend(['Win','Loss','Tie']) # Could not get the legend to cooperate
-ax[0].grid(True, which='major', axis='y')
+#ax[0].legend(['Win','Loss','Tie']) # Could not get the legend to cooperate
+ax[0].grid(True, which='minor', axis='y')
 ax[1].bar(x1, y2, label='Green', color=['green','red','blue'])
 ax[1].set_title('Irish Rugby Away Results: 2003 - 2018')
 ax[1].set_ylabel('Number of Win/Loss/Tie')
 ax[1].grid(True, which='major', axis='y')
-plt.style.use('ggplot')
+fig.savefig("Home_Vs_Away_Results.png")
 plt.show()
+
+# Ireland's Rating Over Time. Needs xaxis labels fixed
+figa, axa = plt.subplots(figsize=(10,6))
+axa.plot(IrelandDF.index, IrelandDF['Rating'], color='green', marker='.') # If I wished to change linestyle: linestyle='-.'
+axa.set_title('Irelands World Rugby Rating 2003 - 2018')
+axa.set_xlabel('Time')
+axa.set_ylabel('World Rugby Team Rating')
+axa.set_xticklabels(IrelandDF.index, rotation=90)
+#axa.set_xticks(ax.get_xticks()[::10])
+#axa.xaxis.set_ticks(np.arrange('2003-10-19','2018-11-24','10')
+#axa.xaxis.set_major_locator(plt.MaxNLocator(50))
+axa.tick_params('y', colors='red')
+axa.grid(True)
+figa.savefig("Ratings_Over_Time.png")
+plt.show()
+
+# Box Plot
+figb, axb = plt.subplots()
+axb.boxplot(IrelandDF['Rating'])
+axb.set_title('Ratings Condensed')
+axb.set_xlabel('Ireland')
+axb.set_ylabel('World Rugby Ratings')
+axb.grid(True)
+figb.savefig("Ratings_Box_Plot.png")
+plt.show()
+
+
+
+
+
+
+
 
 
 # Home Results Simple Bar Chart
@@ -188,7 +221,7 @@ plt.show()
 #plt.legend(('Win','Loss'), loc='upper right')
 #plt.show()
 
-# Home Results
+# Home Results Sample
 #fig1, ax1 = plt.subplots()
 #ax1.bar(x1, y1, label='Green', color=['green','red','blue'])
 #ax1.set_title('Home Results')
@@ -198,7 +231,7 @@ plt.show()
 #plt.style.use('tableau-colorblind10')
 #plt.show()
 
-# Away Results
+# Away Results Sample
 #fig2, ax2 = plt.subplots()
 #ax2.bar(x1, y2, label='Green', color=['green','red','blue'])
 #ax2.set_title('Away Results')
@@ -211,30 +244,6 @@ plt.show()
 
 
 
-
-
-# Ireland's Rating Over Time. Needs xaxis labels fixed
-fig, ax = plt.subplots(figsize=(10,6))
-ax.plot(IrelandDF.index, IrelandDF['Rating'], color='green', marker='.') # If I wished to change linestyle: linestyle='-.'
-ax.set_title('Irelands World Rugby Rating 2003 - 2018')
-ax.set_xlabel('Time')
-ax.set_ylabel('World Rugby Team Rating')
-ax.set_xticklabels(IrelandDF.index, rotation=90)
-#ax.set_xticks(ax.get_xticks()[::10])
-#ax.xaxis.set_ticks(np.arrange('2003-10-19','2018-11-24','10')
-#ax.xaxis.set_major_locator(plt.MaxNLocator(50))
-ax.tick_params('y', colors='red')
-ax.grid(True)
-#plt.show()
-
-# Box Plot
-#figb, axb = plt.subplots()
-#axb.boxplot(IrelandDF['Rating'])
-#axb.set_title('Ratings Condensed')
-#axb.set_xlabel('Ireland')
-#axb.set_ylabel('World Rugby Ratings')
-#axb.grid(True)
-#plt.show()
 
 
 
