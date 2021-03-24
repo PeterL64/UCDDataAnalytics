@@ -45,7 +45,7 @@ IrelandDF['Location'].replace(['Dublin','Limerick','Croke Park','Lansdowne Road'
 #print(Away)
 #Away1 = IrelandDF["Location"] != IrelandDF['Home']
 #print(Away1)
-#Away = IrelandDF['Location'].replace([],['Away'], inplace=True)
+#Away = IrelandDF['Location'].replace([],['Away'], inplace=True) # Not practical to write out every value for this code
 #######################################################################################################################
 #######################################################################################################################
 
@@ -167,6 +167,21 @@ x1 = ['Win', 'Loss', 'Tie']
 y1 = [Home_Wins_Number, Home_Loss_Number, Home_Tied_Number]
 y2 = [Away_Wins_Number, Away_Loss_Number, Away_Tied_Number]
 
+# Home and Away Results Chart
+fig, ax = plt.subplots(2,1, sharey=True, figsize=(8,7))
+ax[0].bar(x1, y1, label='Green', color=['green','red','blue'])
+ax[0].set_title('Irish Rugby Home Results 2003 - 2018')
+ax[0].set_ylabel('Number of Win/Loss/Tie')
+a#x[0].legend(['Win','Loss','Tie']) # Could not get the legend to cooperate
+ax[0].grid(True, which='major', axis='y')
+ax[1].bar(x1, y2, label='Green', color=['green','red','blue'])
+ax[1].set_title('Irish Rugby Away Results: 2003 - 2018')
+ax[1].set_ylabel('Number of Win/Loss/Tie')
+ax[1].grid(True, which='major', axis='y')
+plt.style.use('ggplot')
+plt.show()
+
+
 # Home Results Simple Bar Chart
 #plt.bar(x1, y1, color=['green','red','blue'])
 #plt.title('Home Game Results')
@@ -193,19 +208,7 @@ y2 = [Away_Wins_Number, Away_Loss_Number, Away_Tied_Number]
 #ax2.legend()
 #plt.show()
 
-# Home and Away Results Chart
-#fig, ax = plt.subplots(2,1, sharey=True, figsize=(8,7))
-#ax[0].bar(x1, y1, label='Green', color=['green','red','blue'])
-#ax[0].set_title('Irish Rugby Home Results 2003 - 2018')
-#ax[0].set_ylabel('Number of Win/Loss/Tie')
-##ax[0].legend(['Win','Loss','Tie']) # Could not get the legend to cooperate
-#ax[0].grid(True, which='major', axis='y')
-#ax[1].bar(x1, y2, label='Green', color=['green','red','blue'])
-#ax[1].set_title('Irish Rugby Away Results: 2003 - 2018')
-#ax[1].set_ylabel('Number of Win/Loss/Tie')
-#ax[1].grid(True, which='major', axis='y')
-plt.style.use('ggplot')
-#plt.show()
+
 
 
 
@@ -222,7 +225,7 @@ ax.set_xticklabels(IrelandDF.index, rotation=90)
 #ax.xaxis.set_major_locator(plt.MaxNLocator(50))
 ax.tick_params('y', colors='red')
 ax.grid(True)
-plt.show()
+#plt.show()
 
 # Box Plot
 #figb, axb = plt.subplots()
