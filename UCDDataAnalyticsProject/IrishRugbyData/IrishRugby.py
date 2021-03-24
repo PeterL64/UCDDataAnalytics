@@ -1,5 +1,4 @@
-# Analysing Ireland Rugby match data to determine win rate Home vs Away
-
+# Analysing Ireland Rugby match to compare Home vs Away results.
 
 import numpy as np
 import pandas as pd
@@ -14,11 +13,11 @@ file = "IREMatchData(FULL).csv"
 # file = r"C:\Users\peter\Desktop\UCD Data Analytics\Project\Ireland Rugby\IREMatchData(FULL).csv"
 
 # Loading file
-IrelandDF = pd.read_csv(file) #(, index_col = 1 after file)   # Importing in Pandas DataFrame rather than a Numpy array because there is multiple data types involved
+IrelandDF = pd.read_csv(file, index_col = 1) # Importing in Pandas DataFrame rather than a Numpy array because there is multiple data types involved
+# I set the index as the date column because the values should be all unique
 # Alternatively loading file directly from file location below:
 # IrelandDF = pd.read_csv(r"C:\Users\peter\Desktop\UCD Data Analytics\Project\Ireland Rugby\IREMatchData(FULL).csv")
 
-#print(IrelandDF)
 
 # EXPLORING THE RAW DATA
 
@@ -39,13 +38,16 @@ IrelandDF = pd.read_csv(file) #(, index_col = 1 after file)   # Importing in Pan
 IrelandDF['Location'].replace(['Dublin','Limerick','Croke Park','Lansdowne Road'],['Home','Home','Home','Home'], inplace=True)
 #print(IrelandDF['Location'].value_counts())
 
-###########################################################################
-#Away = IrelandDF.drop_duplicates(subset='Home')
+#######################################################################################################################
+#######################################################################################################################
+#Away = IrelandDF['Location'].drop_duplicates(subset='Home')
 #print(IrelandDF.head(10))
-#x = IrelandDF[["Location"]] != IrelandDF[['Home']]
-#print(x)
+#print(Away)
+#Away1 = IrelandDF["Location"] != IrelandDF['Home']
+#print(Away1)
 #Away = IrelandDF['Location'].replace([],['Away'], inplace=True)
-#####################################################################################################
+#######################################################################################################################
+#######################################################################################################################
 
 missing_values = IrelandDF.isnull().sum()   # Checking if there are any missing values and if there are, how many
 #print(missing_values)
@@ -54,23 +56,9 @@ missing_values = IrelandDF.isnull().sum()   # Checking if there are any missing 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#######################################################################################################################
 # MANIPULATING THE DATA TO SUIT MY GOALS
+
 
 # Creating a dataframe with only relevant columns
 #print(IrelandDF[['Date, Opposition Name, Result, Location, Opposition Rating, Rating']]) # not sure about this line
@@ -80,33 +68,20 @@ IrelandDF.drop(['Opposition Debutants','Debutants','Opposition tries in last 5 g
 #print(IrelandDF.head(10))
 
 
-
-
 # Sorting Values
 # I don't think sorting any of the columns helps my understanding of the data so I will just demonstrate the ability to sort values
 Toughest_Opponents = IrelandDF.sort_values('Opposition Rating', ascending=False)
-#print(Toughest_Opponents)
+#print(Toughest_Opponents) # This shows the opposition Ireland played against with the highest rating at the top of the DataFrame
 
-############################################################################################
+
 # Adding a column
-# This isn't complete, can be deleted
-#Over_Performed = IrelandDF['Opposition Rating'] > IrelandDF['Rating']
-#print(Over_Performed)
-#IrelandDF['Won vs higher rated team'] = [Games_Won & Over_Performed]
-#print(IrelandDF.head(10))
-
 # For a simple demonstration of adding a column:
 IrelandDF['Difference in Rating'] = IrelandDF['Rating'] - IrelandDF['Opposition Rating']
 #print(IrelandDF)
-###############################################################################################
 
 
 
-
-
-
-
-
+######################################################################################################
 # Filtering Wins/Losses/Ties
 Games_Won = (IrelandDF[IrelandDF['Result'] > 0])    # This filters the dataframe to show only records where Ireland won a game
 Games_Lost = (IrelandDF[IrelandDF['Result'] < 0])   # This filters to show records where Ireland lost
@@ -131,32 +106,47 @@ Away_GamesDF = IrelandDF[IrelandDF['Location'] != 'Home']
 
 # DataFrame for Home Victories
 Home_Games_Won = IrelandDF[(IrelandDF['Result'] > 0) & (IrelandDF['Location'] == 'Home')]
+# Tried to complete above line like this but created an error: HGW = Games_Won & Home_GamesDF
 Home_Wins_Number = Home_Games_Won['Result'].count()
 #print(Home_Games_Won.head())
-print(Home_Wins_Number)
+#print(Home_Wins_Number)
 
 # DF for Home Defeats
 Home_Games_Lost = IrelandDF[(IrelandDF['Result'] < 0) & (IrelandDF['Location'] == 'Home')]
 Home_Loss_Number = Home_Games_Lost['Result'].count()
 #print(Home_Games_Lost.head())
-print(Home_Loss_Number)
+#print(Home_Loss_Number)
 
 # DF for Home Games Tied
 Home_Games_Tied = IrelandDF[(IrelandDF['Result'] == 0) & (IrelandDF['Location'] == 'Home')]
 Home_Tied_Number = Home_Games_Tied['Result'].count()
 #print(Home_Games_Tied)
-print(Home_Tied_Number)
-################################################################################################
+#print(Home_Tied_Number)
+
+
+# DataFrame for Away Victories
+Away_Games_Won = IrelandDF[(IrelandDF['Result'] > 0) & (IrelandDF['Location'] != 'Home')]
+Away_Wins_Number = Away_Games_Won['Result'].count()
+#print(Away_Games_Won.head())
+#print(Away_Wins_Number)
+
+# DF for Away Defeats
+Away_Games_Lost = IrelandDF[(IrelandDF['Result'] < 0) & (IrelandDF['Location'] != 'Home')]
+Away_Loss_Number = Away_Games_Lost['Result'].count()
+#print(Away_Games_Lost.head())
+#print(Away_Loss_Number)
+
+# DF for Away Games Tied
+Away_Games_Tied = IrelandDF[(IrelandDF['Result'] == 0) & (IrelandDF['Location'] != 'Home')]
+Away_Tied_Number = Away_Games_Tied['Result'].count()
+#print(Away_Games_Tied)
+#print(Away_Tied_Number)
+#####################################################################################################
+
+# Merge two DataFrames
 
 
 
-########################################################### HAVE A LOOK AT THIS AVENUE AGAIN
-#Sum = IrelandDF['Opposition Name'].value_counts().sum()
-#print(Sum)
-
-
-#grouped = IrelandDF.groupby('Location')['Rating']
-#print(grouped)
 
 
 
@@ -170,47 +160,69 @@ print(Home_Tied_Number)
 
 
 
-
+##########################################################################################
 # VISUALIZING THE DATA
 
-# Home Results Bar CHart
-x = ['Win', 'Loss', 'Tie']
-y = [Home_Wins_Number, Home_Loss_Number, Home_Tied_Number]
-#plt.bar(x, y, color=['green','red','blue'])
+x1 = ['Win', 'Loss', 'Tie']
+y1 = [Home_Wins_Number, Home_Loss_Number, Home_Tied_Number]
+y2 = [Away_Wins_Number, Away_Loss_Number, Away_Tied_Number]
+
+# Home Results Simple Bar Chart
+#plt.bar(x1, y1, color=['green','red','blue'])
 #plt.title('Home Game Results')
 #plt.legend(('Win','Loss'), loc='upper right')
 #plt.show()
 
-#fig, ax = plt.subplots()
-#ax.bar(x, y, label='Green', color=['green','red','blue'])
-#ax.set_title('Title')
-#ax.set_xlabel('XLABEL')
-#ax.set_ylabel('YLABEL')
-#ax.legend()
-#ax.set_xticklabels(x, rotation=0)
+# Home Results
+#fig1, ax1 = plt.subplots()
+#ax1.bar(x1, y1, label='Green', color=['green','red','blue'])
+#ax1.set_title('Home Results')
+#ax1.set_xlabel('Win/Loss/Tie')
+#ax1.set_ylabel('Number of Win/Loss/Tie')
+#ax1.legend()
+#plt.style.use('tableau-colorblind10')
 #plt.show()
 
+# Away Results
+#fig2, ax2 = plt.subplots()
+#ax2.bar(x1, y2, label='Green', color=['green','red','blue'])
+#ax2.set_title('Away Results')
+#ax2.set_xlabel('Win/Loss/Tie')
+#ax2.set_ylabel('Number of Win/Loss/Tie')
+#plt.style.use('ggplot')
+#ax2.legend()
+#plt.show()
 
-
-
+# Home and Away Results Chart
+#fig, ax = plt.subplots(2,1, sharey=True, figsize=(8,7))
+#ax[0].bar(x1, y1, label='Green', color=['green','red','blue'])
+#ax[0].set_title('Irish Rugby Home Results 2003 - 2018')
+#ax[0].set_ylabel('Number of Win/Loss/Tie')
+##ax[0].legend(['Win','Loss','Tie']) # Could not get the legend to cooperate
+#ax[0].grid(True, which='major', axis='y')
+#ax[1].bar(x1, y2, label='Green', color=['green','red','blue'])
+#ax[1].set_title('Irish Rugby Away Results: 2003 - 2018')
+#ax[1].set_ylabel('Number of Win/Loss/Tie')
+#ax[1].grid(True, which='major', axis='y')
+plt.style.use('ggplot')
+#plt.show()
 
 
 
 
 # Ireland's Rating Over Time. Needs xaxis labels fixed
-#fig, ax = plt.subplots(figsize=(10,6))
-#ax.plot(IrelandDF.index, IrelandDF['Rating'], color='green', marker='.') # If I wished to change linestyle: linestyle='-.'
-#ax.set_title('Irelands World Rugby Rating 2003 - 2018')
-#ax.set_xlabel('Time')
-#ax.set_ylabel('World Rugby Team Rating')
+fig, ax = plt.subplots(figsize=(10,6))
+ax.plot(IrelandDF.index, IrelandDF['Rating'], color='green', marker='.') # If I wished to change linestyle: linestyle='-.'
+ax.set_title('Irelands World Rugby Rating 2003 - 2018')
+ax.set_xlabel('Time')
+ax.set_ylabel('World Rugby Team Rating')
+ax.set_xticklabels(IrelandDF.index, rotation=90)
 #ax.set_xticks(ax.get_xticks()[::10])
-##ax.xaxis.set_ticks(np.arrange(xmin, xmax, stepsize))
-##ax.set_xticks([])
-##ax.set_xticklabels(IrelandDF.index, rotation=45)
-##ax.xaxis.set_major_locator(plt.MaxNLocator(100))
-#ax.tick_params('y', colors='red')
-#ax.grid(True)
-#plt.show()
+#ax.xaxis.set_ticks(np.arrange('2003-10-19','2018-11-24','10')
+#ax.xaxis.set_major_locator(plt.MaxNLocator(50))
+ax.tick_params('y', colors='red')
+ax.grid(True)
+plt.show()
 
 # Box Plot
 #figb, axb = plt.subplots()
@@ -221,45 +233,14 @@ y = [Home_Wins_Number, Home_Loss_Number, Home_Tied_Number]
 #axb.grid(True)
 #plt.show()
 
-#Mean_Rating = IrelandDF['Rating'].mean()
-#print(Mean_Rating)
-#print(IrelandDF['Result'])
-
-
-
-#fig, ax = plt.subplots()
-#ax.hist(IrelandDF.index, IrelandDF['Rating'])
-#ax.set_xticklabels(IrelandDF.index, rotation=90)
-#ax.set_ylabel('Ratings')
-#plt.show()
-
-#Sample Simple Plot
-#IrelandDF['Rating'].plot(kind='line')
-#plt.show()
 
 
 
 
+#######################################################################################################################
+# Miscellaneous code
 
-
-
-
-#plt.hist(IrelandDF['Rating'],bins=10)
-#plt.show()
-
-#plt.hist(Home_Wins_Number, bins=1)
-#plt.show()
-
-#plt.bar('Home',Home_Loss_Number)
-#plt.show()
-
-#print(IrelandDF.head())
-#IreLocation = IrelandDF[['Location']]
-#print(IreLocation)
-#IreHome
-#print(IrelandDF[['Result']])
-
-
+# for loop
 #fig1, ax1 = plt.subplots()
 #for country in IrelandDF:
 #    CountryDF = IrelandDF[IrelandDF['Opposition Name'] == country]
@@ -267,4 +248,3 @@ y = [Home_Wins_Number, Home_Loss_Number, Home_Tied_Number]
 #ax1.set_ylabel('ABC')
 #ax1.set_xticklabels(country, rotation=90)
 #plt.show()
-
