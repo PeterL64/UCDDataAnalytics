@@ -40,6 +40,7 @@ IrelandDF['Location'].replace(['Dublin','Limerick','Croke Park','Lansdowne Road'
 
 #######################################################################################################################
 #######################################################################################################################
+# Changing Away venues to 'Away'
 #Away = IrelandDF['Location'].drop_duplicates(subset='Home')
 #print(IrelandDF.head(10))
 #print(Away)
@@ -81,7 +82,7 @@ IrelandDF['Difference in Rating'] = IrelandDF['Rating'] - IrelandDF['Opposition 
 
 
 
-######################################################################################################
+########################################################################################################################
 # Filtering Wins/Losses/Ties
 Games_Won = (IrelandDF[IrelandDF['Result'] > 0])    # This filters the dataframe to show only records where Ireland won a game
 Games_Lost = (IrelandDF[IrelandDF['Result'] < 0])   # This filters to show records where Ireland lost
@@ -141,26 +142,13 @@ Away_Games_Tied = IrelandDF[(IrelandDF['Result'] == 0) & (IrelandDF['Location'] 
 Away_Tied_Number = Away_Games_Tied['Result'].count()
 #print(Away_Games_Tied)
 #print(Away_Tied_Number)
-#####################################################################################################
-
-# Merge two DataFrames
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-##########################################################################################
+#######################################################################################################################
 # VISUALIZING THE DATA
 
 x1 = ['Win', 'Loss', 'Tie']
@@ -179,7 +167,7 @@ ax[1].bar(x1, y2, label='Green', color=['green','red','blue'])
 ax[1].set_title('Irish Rugby Away Results: 2003 - 2018')
 ax[1].set_ylabel('Number of Win/Loss/Tie')
 ax[1].grid(True, which='major', axis='y')
-fig.savefig("Home_Vs_Away_Results.png")
+#fig.savefig("Home_Vs_Away_Results.png")
 plt.show()
 
 # Ireland's Rating Over Time. Needs xaxis labels fixed
@@ -194,7 +182,7 @@ axa.set_xticklabels(IrelandDF.index, rotation=90)
 #axa.xaxis.set_major_locator(plt.MaxNLocator(50))
 axa.tick_params('y', colors='red')
 axa.grid(True)
-figa.savefig("Ratings_Over_Time.png")
+#figa.savefig("Ratings_Over_Time.png")
 plt.show()
 
 # Box Plot
@@ -204,15 +192,8 @@ axb.set_title('Ratings Condensed')
 axb.set_xlabel('Ireland')
 axb.set_ylabel('World Rugby Ratings')
 axb.grid(True)
-figb.savefig("Ratings_Box_Plot.png")
+#figb.savefig("Ratings_Box_Plot.png")
 plt.show()
-
-
-
-
-
-
-
 
 
 # Home Results Simple Bar Chart
@@ -221,36 +202,17 @@ plt.show()
 #plt.legend(('Win','Loss'), loc='upper right')
 #plt.show()
 
-# Home Results Sample
-#fig1, ax1 = plt.subplots()
-#ax1.bar(x1, y1, label='Green', color=['green','red','blue'])
-#ax1.set_title('Home Results')
-#ax1.set_xlabel('Win/Loss/Tie')
-#ax1.set_ylabel('Number of Win/Loss/Tie')
-#ax1.legend()
-#plt.style.use('tableau-colorblind10')
-#plt.show()
-
-# Away Results Sample
-#fig2, ax2 = plt.subplots()
-#ax2.bar(x1, y2, label='Green', color=['green','red','blue'])
-#ax2.set_title('Away Results')
-#ax2.set_xlabel('Win/Loss/Tie')
-#ax2.set_ylabel('Number of Win/Loss/Tie')
-#plt.style.use('ggplot')
-#ax2.legend()
-#plt.show()
-
-
-
-
-
-
-
 
 
 #######################################################################################################################
 # Miscellaneous code
+
+#print(IrelandDF.head())
+
+# Slicing a DataFrame
+#print(IrelandDF.head(10))
+#Slice = IrelandDF.loc[('France','Melbourne'):('Italy','Home')]
+#print(Slice)
 
 # for loop
 #fig1, ax1 = plt.subplots()
@@ -260,3 +222,14 @@ plt.show()
 #ax1.set_ylabel('ABC')
 #ax1.set_xticklabels(country, rotation=90)
 #plt.show()
+
+# Using a get request to get an API
+#import requests
+#url = 'https://api.github.com/search/repositories?q=language:python&sort=stars'
+#r = requests.get(url)
+#Json_Data = r.json()
+#print(Json_Data)
+
+# Grouping
+#Opp = IrelandDF.groupby('Location')[['Opposition Name','Opposition Rating']]
+#print(Opp)
