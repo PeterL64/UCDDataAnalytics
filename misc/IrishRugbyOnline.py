@@ -5,7 +5,7 @@ import pandas as pd
 import kaggle
 kaggle.api.aunthenticate()
 kaggle.api.dataset_download_files('https://www.kaggle.com/harryarthur/ireland-rugby-match-data-internationals?select=IREMatchData%28FULL%29.csv', \
-                                  path= r'C:\Users\peter\PycharmProjects\pythonProjectUCDDataAnalytics\UCDDataAnalyticsProject\IrishRugbyData', \
+                                  path=r'/UCDDataAnalyticsProject/IrishRugbyData', \
                                   unzip=True)
 
 
