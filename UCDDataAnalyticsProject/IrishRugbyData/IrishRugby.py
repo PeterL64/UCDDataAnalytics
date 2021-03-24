@@ -14,7 +14,7 @@ file = "IREMatchData(FULL).csv"
 # file = r"C:\Users\peter\Desktop\UCD Data Analytics\Project\Ireland Rugby\IREMatchData(FULL).csv"
 
 # Loading file
-IrelandDF = pd.read_csv(file, index_col = 1)    # Importing in Pandas DataFrame rather than a Numpy array because there is multiple data types involved
+IrelandDF = pd.read_csv(file) #(, index_col = 1 after file)   # Importing in Pandas DataFrame rather than a Numpy array because there is multiple data types involved
 # Alternatively loading file directly from file location below:
 # IrelandDF = pd.read_csv(r"C:\Users\peter\Desktop\UCD Data Analytics\Project\Ireland Rugby\IREMatchData(FULL).csv")
 
@@ -118,43 +118,45 @@ Games_Tied = (IrelandDF[IrelandDF['Result'] == 0])  # This filters to show recor
 # Creating a DataFrame showing Home Game results
 Home_GamesDF = IrelandDF[IrelandDF['Location'] == 'Home']
 #print(Home_GamesDF)
+#print((Home_GamesDF[['Result']] > 0).value_counts())    # Counting the number of Home Games Ireland Won
+#print((Home_GamesDF[['Result']] < 0).value_counts())    # Counting the number of Home Games Ireland Lost
+#print((Home_GamesDF[['Result']] == 0).value_counts())   # Counting the number of Home Games Ireland Tied
 
 # Creating a DataFrame showing Away Game results
 Away_GamesDF = IrelandDF[IrelandDF['Location'] != 'Home']
 #print(Away_GamesDF)
 #print((Away_GamesDF[['Result']] > 0).value_counts()) # Double square brackets to show a DF not a pandas series
+#print((Away_GamesDF[['Result']] < 0).value_counts())
+#print((Away_GamesDF[['Result']] == 0).value_counts())
 
-
-# DF for Home Victories
+# DataFrame for Home Victories
 Home_Games_Won = IrelandDF[(IrelandDF['Result'] > 0) & (IrelandDF['Location'] == 'Home')]
-#Home_Games_Won = IrelandDF[Games_Won & ex]
 Home_Wins_Number = Home_Games_Won['Result'].count()
-#print(Home_Games_Won)
-#print(Home_Wins_Number)
+#print(Home_Games_Won.head())
+print(Home_Wins_Number)
 
 # DF for Home Defeats
-#Home_Games_Lost = IrelandDF[(IrelandDF['Result'] < 0) & (IrelandDF['Location'] == 'Home')]
+Home_Games_Lost = IrelandDF[(IrelandDF['Result'] < 0) & (IrelandDF['Location'] == 'Home')]
+Home_Loss_Number = Home_Games_Lost['Result'].count()
 #print(Home_Games_Lost.head())
+print(Home_Loss_Number)
 
-# Home Games Tied
-#Home_Games_Tied = IrelandDF[(IrelandDF['Result'] == 0) & (IrelandDF['Location'] == 'Home')]
+# DF for Home Games Tied
+Home_Games_Tied = IrelandDF[(IrelandDF['Result'] == 0) & (IrelandDF['Location'] == 'Home')]
+Home_Tied_Number = Home_Games_Tied['Result'].count()
 #print(Home_Games_Tied)
+print(Home_Tied_Number)
+################################################################################################
 
 
-#print(IrelandDF.head())
-#df = [[IrelandDF['Results'],IrelandDF['Location']]
 
-#df2 = pd.concat(df, axis=1)]
-#print(df2)
-
-
-Sum = IrelandDF['Opposition Name'].value_counts().sum()
+########################################################### HAVE A LOOK AT THIS AVENUE AGAIN
+#Sum = IrelandDF['Opposition Name'].value_counts().sum()
 #print(Sum)
 
 
-grouped = IrelandDF.groupby('Location')['Rating']
-print(grouped)
-
+#grouped = IrelandDF.groupby('Location')['Rating']
+#print(grouped)
 
 
 
@@ -171,19 +173,24 @@ print(grouped)
 
 # VISUALIZING THE DATA
 
-#homeEx = IrelandDF['Location'] == 'Home'
-# Home Game Win/Loss
+# Home Results Bar CHart
+x = ['Win', 'Loss', 'Tie']
+y = [Home_Wins_Number, Home_Loss_Number, Home_Tied_Number]
+#plt.bar(x, y, color=['green','red','blue'])
+#plt.title('Home Game Results')
+#plt.legend(('Win','Loss'), loc='upper right')
+#plt.show()
+
 #fig, ax = plt.subplots()
-#ax.bar(IrelandDF['Location'], IrelandDF['Results'])
-#ax.bar(homeEx, Home_Wins_Number)
+#ax.bar(x, y, label='Green', color=['green','red','blue'])
+#ax.set_title('Title')
+#ax.set_xlabel('XLABEL')
+#ax.set_ylabel('YLABEL')
+#ax.legend()
+#ax.set_xticklabels(x, rotation=0)
 #plt.show()
 
-#ax.bar(Home_Wins_Number,)
-#Home_Graph = Home_Games_Won.groupby('Result')['Result'].sum()
 
-# Create a bar plot of the number of avocados sold by size
-#Home_Graph.plot(kind='line')
-#plt.show()
 
 
 
@@ -191,19 +198,34 @@ print(grouped)
 
 
 # Ireland's Rating Over Time. Needs xaxis labels fixed
-fig, ax = plt.subplots(figsize=(10,6))
-ax.plot(IrelandDF.index, IrelandDF['Rating'], color='green', marker='.') # If I wished to change linestyle: linestyle='-.'
-ax.set_title('Irelands World Rugby Rating 2003 - 2018')
-ax.set_xlabel('Time')
-ax.set_ylabel('World Rugby Team Rating')
-ax.set_xticks(ax.get_xticks()[::10])
-#ax.xaxis.set_ticks(np.arrange(xmin, xmax, stepsize))
-#ax.set_xticks([])
-#ax.set_xticklabels(IrelandDF.index, rotation=45)
+#fig, ax = plt.subplots(figsize=(10,6))
+#ax.plot(IrelandDF.index, IrelandDF['Rating'], color='green', marker='.') # If I wished to change linestyle: linestyle='-.'
+#ax.set_title('Irelands World Rugby Rating 2003 - 2018')
+#ax.set_xlabel('Time')
+#ax.set_ylabel('World Rugby Team Rating')
+#ax.set_xticks(ax.get_xticks()[::10])
+##ax.xaxis.set_ticks(np.arrange(xmin, xmax, stepsize))
+##ax.set_xticks([])
+##ax.set_xticklabels(IrelandDF.index, rotation=45)
 ##ax.xaxis.set_major_locator(plt.MaxNLocator(100))
-ax.tick_params('y', colors='red')
-ax.grid(True)
+#ax.tick_params('y', colors='red')
+#ax.grid(True)
 #plt.show()
+
+# Box Plot
+#figb, axb = plt.subplots()
+#axb.boxplot(IrelandDF['Rating'])
+#axb.set_title('Ratings Condensed')
+#axb.set_xlabel('Ireland')
+#axb.set_ylabel('World Rugby Ratings')
+#axb.grid(True)
+#plt.show()
+
+#Mean_Rating = IrelandDF['Rating'].mean()
+#print(Mean_Rating)
+#print(IrelandDF['Result'])
+
+
 
 #fig, ax = plt.subplots()
 #ax.hist(IrelandDF.index, IrelandDF['Rating'])
@@ -214,3 +236,35 @@ ax.grid(True)
 #Sample Simple Plot
 #IrelandDF['Rating'].plot(kind='line')
 #plt.show()
+
+
+
+
+
+
+
+
+#plt.hist(IrelandDF['Rating'],bins=10)
+#plt.show()
+
+#plt.hist(Home_Wins_Number, bins=1)
+#plt.show()
+
+#plt.bar('Home',Home_Loss_Number)
+#plt.show()
+
+#print(IrelandDF.head())
+#IreLocation = IrelandDF[['Location']]
+#print(IreLocation)
+#IreHome
+#print(IrelandDF[['Result']])
+
+
+#fig1, ax1 = plt.subplots()
+#for country in IrelandDF:
+#    CountryDF = IrelandDF[IrelandDF['Opposition Name'] == country]
+#    ax1.bar(country, CountryDF['Result'] > 0)
+#ax1.set_ylabel('ABC')
+#ax1.set_xticklabels(country, rotation=90)
+#plt.show()
+
