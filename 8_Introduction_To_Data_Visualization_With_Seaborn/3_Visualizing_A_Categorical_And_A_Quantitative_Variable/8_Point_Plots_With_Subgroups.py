@@ -1,5 +1,8 @@
 # Point Plots with Subgroups
 
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 # Use sns.catplot() and the student_data DataFrame to create a point plot with relationship status ("romantic")
 # on the x-axis and number of absences ("absences") on the y-axis.
 # Create subgroups based on the school that they attend ("school")
